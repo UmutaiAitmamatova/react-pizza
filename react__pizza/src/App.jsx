@@ -42,7 +42,7 @@ const App = () => {
 
 
 
-          <SotrPopup/>
+          <SotrPopup items={['популярности', 'цене', 'алфавиту']}/>
             {/* <div className="sort">
               <div className="sort__label">
                 <svg
