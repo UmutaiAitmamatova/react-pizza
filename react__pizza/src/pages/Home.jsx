@@ -17,13 +17,11 @@ function Home ({ items }) {
       <div className="content__items">
 
 
-        {/* {items && items.map((obj) => (
+        {items && items.map((obj) => (
         <PizzaBlock name={obj.name}/>
-        ))} */}
+        ))}
 
-{items && items.map((obj) => console.log(obj))}
 
-        {/* <PizzaBlock/> */}
       </div>
     </div>
   );
