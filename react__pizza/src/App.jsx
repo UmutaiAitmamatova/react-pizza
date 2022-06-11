@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios'
 
 // import Button from "./Button";
 import { Home, Cart } from "./pages";
@@ -12,12 +13,10 @@ const App = () => {
   const [pizzas, setPizzas] = React.useState([])
 
   React.useEffect(() => {
-    fetch('http://localhost:3000/db.json').then((resp) => resp.json()).then(json => {
-      setPizzas(json.pizzas);
-    })
+    axios.get('http://localhost:3000/db.json').then(({ data }) => {
+      setPizzas(data.pizzas);
+    });
   }, []);
-
-  console.log(pizzas);
 
   
     return (
@@ -34,10 +33,7 @@ const App = () => {
 
       <Routes>
 
-          {/* <Route path='/' render={() => <Home items={pizzas}/>} exact/> */}
-
-
-          <Route path='/' element={<Home/>} exact/>
+          <Route path='/' element={<Home items={pizzas}/>} exact/>
           <Route path='/cart' element={<Cart/>} exact/>
       </Routes>
         

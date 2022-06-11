@@ -3,7 +3,6 @@ import React from "react";
 import { Categories, SotrPopup, PizzaBlock } from "../components";
 
 function Home ({ items }) {
-
   return (
     <div className="container">
       <div className="content__top">
@@ -18,7 +17,7 @@ function Home ({ items }) {
 
 
         {items && items.map((obj) => (
-        <PizzaBlock name={obj.name}/>
+        <PizzaBlock key={obj.id} {...obj}/>
         ))}
 
 
