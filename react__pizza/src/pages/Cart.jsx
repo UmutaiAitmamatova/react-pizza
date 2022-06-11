@@ -9,3 +9,13 @@ export class Cart extends Component {
 }
 
 export default Cart
+
+// import React from 'react'
+
+// const Cart = () => {
+//   return (
+//     <div>Cart</div>
+//   )
+// }
+
+// export default Cart;
