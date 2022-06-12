@@ -1,13 +1,11 @@
-// import React, { useState, useEffect, useRef} from 'react'
-import React from 'react';
-
+import React, { useState, useEffect, useRef} from 'react'
 
 function SotrPopup({items}){
-const [visiblePopup, setVisiblePopup] = React.useState(false)
-const [activeItem, setActiveItem] = React.useState(0)
+const [visiblePopup, setVisiblePopup] = useState(false)
+const [activeItem, setActiveItem] = useState(0)
 
-const sortRef = React.useRef()
-const avtiveLabel = items[activeItem]
+const sortRef = useRef()
+const avtiveLabel = items[activeItem].name;
 
 const toggleVisiblePopup = () => {
   setVisiblePopup(!visiblePopup)
@@ -16,7 +14,7 @@ const toggleVisiblePopup = () => {
 const handleOutsideClick = (e) => {
   if (!e.path.includes(sortRef.current)){
     setVisiblePopup(false)
-  console.log('outside')}
+}
 }
 
 const onSelectItem = (index) => {
@@ -24,7 +22,7 @@ const onSelectItem = (index) => {
   setVisiblePopup(false)
 }
 
-React.useEffect(() => {
+useEffect(() => {
   document.body.addEventListener('click', handleOutsideClick);
 }, [])
 
@@ -54,18 +52,17 @@ React.useEffect(() => {
                 <ul>
 
                   {items && (
-                    items.map((name, index) => 
+                    items.map((obj, index) => 
                     <li 
                     onClick={() => onSelectItem(index)}
                     className={activeItem === index ? 'active' : ''}
-                        key={`${name}_${index}`}>
-                        {name}
+                        key={`${obj.type}_${index}`}>
+                        {obj.name}
                   </li>))}
 
                 </ul>
               </div>)}
             </div> 
-
   )
 }
 
