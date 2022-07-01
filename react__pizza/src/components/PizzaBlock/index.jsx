@@ -5,11 +5,14 @@ import classNames from "classnames";
 
 
 const Pizzablock = ({ name, imageUrl, price, types, sizes, isLoading }) => {
+
   const availableTypes = ["тонкое", "традиционное"];
+  const availableSize = [26, 30, 40];
+
   const [activeType, SetActiveType] = useState(types[0]);
   const [activeSize, SetActiveSize] = useState(sizes[0]);
 
-  const availableSize = [26, 30, 40];
+
 
   const onSelectType = (index) => {
     SetActiveType(index);
@@ -17,7 +20,6 @@ const Pizzablock = ({ name, imageUrl, price, types, sizes, isLoading }) => {
   const onSelectSize = (index) => {
     SetActiveSize(index);
   };
-
 
   return (
     <div className="pizza-block">

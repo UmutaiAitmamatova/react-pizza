@@ -1,9 +1,10 @@
 import React from "react";
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
+import {fetchPizzas} from "../redux/actions/pizzas";
 
-import { Categories, SotrPopup, PizzaBlock } from "../components";
+import { Categories, SotrPopup, PizzaBlock, PizzaLoadingBlock } from "../components";
 import { setCategory } from '../redux/actions/filters'
 
 const categoryName = ["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
@@ -16,11 +17,19 @@ const sortItem = [
 function Home () {
   const dispatch = useDispatch();
 
-  const { items } = useSelector(({ pizzas }) => {
-    return{
-      items: pizzas.items,
-    }
-  });
+  const items = useSelector(({ pizzas }) => pizzas.items)
+  const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded)
+  const {category, sortBy}=useSelector(({filters})=>filters);
+
+  console.log(category, sortBy);
+  // React.useEffect(() => {
+  //   fetchPizzas(dispatch);
+  // }, [])
+
+  React.useEffect(()=>{
+    dispatch(fetchPizzas(category, sortBy))
+  },[category, sortBy ])
+
 
 const onSelectCategory = React.useCallback( (index) => {
   dispatch(setCategory(index));
@@ -31,20 +40,23 @@ const onSelectCategory = React.useCallback( (index) => {
     <div className="container">
       <div className="content__top">
         <Categories
-          onClick={onSelectCategory}
+          // onClick={onSelectCategory}
+          // items={categoryName}
+
+          activeCategory={category}
+          onClickCategory={onSelectCategory}
           items={categoryName}
         />
+
         <SotrPopup items={sortItem} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
 
 
-        {items && items.map((obj) => (
-        <PizzaBlock key={obj.id} {...obj}/>
-        ))}
-
-
+        {isLoaded ? items.map((obj) => 
+        <PizzaBlock key={obj.id} isLoading={true} {...obj}/>) : Array(10).fill(<PizzaLoadingBlock/>)}
+        
       </div>
     </div>
   );
