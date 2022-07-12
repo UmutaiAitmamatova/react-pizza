@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import {fetchPizzas} from "../redux/actions/pizzas";
 
-import { Categories, SotrPopup, PizzaBlock, PizzaLoadingBlock } from "../components";
-import { setCategory } from '../redux/actions/filters'
+import { Categories, SortPopup, PizzaBlock, PizzaLoadingBlock } from "../components";
+import { setCategory, setSortBy } from '../redux/actions/filters'
 
 const categoryName = ["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
 const sortItem = [
-  {name: 'популярности', type: 'popular'},
-  {name: 'цене', type: 'price'},
-  {name: 'алфавиту', type: 'alphabet'},
-]
+  { name: "популярности", type: "popular", order: "desc" },
+  { name: "цена", type: "price", order: "desc" },
+  { name: "алфавит", type: "name", order: "asc" },
+];
 
 function Home () {
   const dispatch = useDispatch();
@@ -21,19 +21,24 @@ function Home () {
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded)
   const {category, sortBy}=useSelector(({filters})=>filters);
 
-  console.log(category, sortBy);
+  // console.log(category, sortBy);
+
   // React.useEffect(() => {
   //   fetchPizzas(dispatch);
   // }, [])
 
   React.useEffect(()=>{
-    dispatch(fetchPizzas(category, sortBy))
+    dispatch(fetchPizzas(sortBy, category))
   },[category, sortBy ])
 
 
-const onSelectCategory = React.useCallback( (index) => {
-  dispatch(setCategory(index));
-}, [])
+  const onSelectCategory = React.useCallback((index) => {
+    dispatch(setCategory(index));
+  }, []);
+
+  const onSelectSortType = React.useCallback((type) => {
+    dispatch(setSortBy(type));
+  }, []);
 
 
   return (
@@ -48,7 +53,7 @@ const onSelectCategory = React.useCallback( (index) => {
           items={categoryName}
         />
 
-        <SotrPopup items={sortItem} />
+      <SortPopup activeSortType={sortBy.type} items={sortItem} onClickSortType={onSelectSortType}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
