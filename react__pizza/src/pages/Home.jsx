@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 
 import {fetchPizzas} from "../redux/actions/pizzas";
+import {addPizzaToCart, handlAddPizza} from "../redux/actions/cart";
 
 import { Categories, SortPopup, PizzaBlock, PizzaLoadingBlock } from "../components";
 import { setCategory, setSortBy } from '../redux/actions/filters'
@@ -18,6 +19,7 @@ function Home () {
   const dispatch = useDispatch();
 
   const items = useSelector(({ pizzas }) => pizzas.items)
+  const cartItems = useSelector(({ cart }) => cart.items)
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded)
   const {category, sortBy}=useSelector(({filters})=>filters);
 
@@ -40,6 +42,12 @@ function Home () {
     dispatch(setSortBy(type));
   }, []);
 
+  const handlAddPizza = obj => {
+    dispatch({
+      type: 'ADD_PIZZA_CART',
+      payload: obj,
+    })
+  }
 
   return (
     <div className="container">
@@ -60,7 +68,7 @@ function Home () {
 
 
         {isLoaded ? items.map((obj) => 
-        <PizzaBlock key={obj.id} isLoading={true} {...obj}/>) : Array(10).fill(<PizzaLoadingBlock/>)}
+        <PizzaBlock onClickAddPizza={handlAddPizza} key={obj.id} addedCount={cartItems[obj.id] && cartItems[obj.id].lenght} {...obj}/>) : Array(10).fill(<PizzaLoadingBlock/>)}
         
       </div>
     </div>
