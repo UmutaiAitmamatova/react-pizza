@@ -23,13 +23,7 @@ function Home () {
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded)
   const {category, sortBy}=useSelector(({filters})=>filters);
 
-  // console.log(category, sortBy);
-
-  // React.useEffect(() => {
-  //   fetchPizzas(dispatch);
-  // }, [])
-
-  React.useEffect(()=>{
+React.useEffect(()=>{
     dispatch(fetchPizzas(sortBy, category))
   },[category, sortBy ])
 
@@ -53,26 +47,31 @@ function Home () {
     <div className="container">
       <div className="content__top">
         <Categories
-          // onClick={onSelectCategory}
+          onClick={onSelectCategory}
           // items={categoryName}
-
           activeCategory={category}
           onClickCategory={onSelectCategory}
           items={categoryName}
         />
 
-      <SortPopup activeSortType={sortBy.type} items={sortItem} onClickSortType={onSelectSortType}/>
+      <SortPopup 
+      activeSortType={sortBy.type} 
+      items={sortItem} 
+      onClickSortType={onSelectSortType}
+      />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
 
-
         {isLoaded ? items.map((obj) => 
-        <PizzaBlock onClickAddPizza={handlAddPizza} key={obj.id} addedCount={cartItems[obj.id] && cartItems[obj.id].lenght} {...obj}/>) : Array(10).fill(<PizzaLoadingBlock/>)}
+        <PizzaBlock 
+        onClickAddPizza={handlAddPizza} 
+        key={obj.id} 
+        addedCount={cartItems[obj.id] && cartItems[obj.id].items.lenght} {...obj}/>) 
+        : Array(10).fill(<PizzaLoadingBlock/>)}
         
       </div>
     </div>
   );
 };
-
 export default Home;

@@ -4,8 +4,6 @@ import logo from './assets/pizza-logo.svg'
 
 const Header = () => {
     return (
-
-
         <div className="header">
         <div className="container">
           <div className="header__logo">

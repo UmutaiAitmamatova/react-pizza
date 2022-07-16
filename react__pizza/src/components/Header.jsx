@@ -5,20 +5,11 @@ import logo from '../assets/pizza-logo.svg'
 import Button from './Button'
 import { useSelector } from 'react-redux'
 
-
-// const Header = () => {
-//   const { totalPrice, totalCount } = useSelector(({ cart }) => ({
-//     totalPrice: cart.totalPrice,
-//     totalCount: cart.totalCount,
-//   })); //Обращаемся к редаксу и получаем данные из карзины);
-
   const Header = () => {
     const { totalPrice, totalCount } = useSelector(({ cart }) => cart); 
-
     return (
               <div className="header">
         <div className="container">
-
         <Link to='/'>
         <div className="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
@@ -28,8 +19,6 @@ import { useSelector } from 'react-redux'
             </div>
           </div>
         </Link>
-
-
           <div className="header__cart">
             <Link to='/cart'>
             <Button className="button--cart">
